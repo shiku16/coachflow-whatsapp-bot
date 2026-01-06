@@ -4,6 +4,10 @@ const axios = require("axios");
 
 const app = express();
 app.use(express.json());
+// ✅ Health check route (for Render + UptimeRobot)
+app.get("/", (req, res) => {
+  res.status(200).send("CoachFlow WhatsApp Bot is running 🚀");
+});
 
 const PORT = process.env.PORT || 3000;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
