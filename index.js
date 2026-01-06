@@ -35,16 +35,19 @@ app.get("/webhook", (req, res) => {
 
 // ================= RECEIVE MESSAGE =================
 app.post("/webhook", async (req, res) => {
+  console.log("🔥 RAW BODY:", JSON.stringify(req.body, null, 2));
   try {
     const msg =
       req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
+console.log("📩 MESSAGE OBJECT:", msg);
 
-    if (!msg || !msg.text) return res.sendStatus(200);
+    if (!msg || !msg.text) {
+  console.log("❌ No text message");
+  return res.sendStatus(200);
+}
 
-    const from = msg.from;
-    const text = msg.text.body.trim().toLowerCase();
-
-    console.log("📩 MESSAGE:", text);
+const text = msg.text.body.trim();
+console.log("✅ USER TEXT:", text);
 
     // ================= KEYWORD AUTO REPLIES =================
     const keywords = {
